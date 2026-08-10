@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Lumin Death — questions about orders, sizing, returns or stockists.">
+
+    <link rel="stylesheet" href="../css/resets.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" type="image/svg+xml" href="../media/images/logo.svg">
+
+    <title>Contact — Lumin Death</title>
+</head>
+<body>
+
+<!-- ===================================================================== -->
+<!-- HEADER                                                                -->
+<!-- ===================================================================== -->
+<header class="site-header">
+    <div class="container site-header__inner">
+
+        <a class="brand" href="index.html">
+            <img class="brand__mark" src="../media/images/logo.svg" alt="">
+            <span class="brand__name">Lumin Death</span>
+            <span class="visually-hidden">Lumin Death — home</span>
+        </a>
+
+        <button class="nav-toggle" type="button" aria-expanded="false">[+]</button>
+
+        <nav class="site-nav" aria-label="Main navigation">
+            <ul>
+                <li><a href="index.html">Home [↗]</a></li>
+                <li><a href="products.html">Products [↗]</a></li>
+                <li><a href="about.html">About [↗]</a></li>
+                <li><a href="contact.html" aria-current="page">Contact [↗]</a></li>
+            </ul>
+        </nav>
+
+        <a class="cart-link" href="cart.html">
+            <span class="shopping-cart" aria-hidden="true"></span>
+            <span class="visually-hidden">Cart</span>
+            <span class="cart-link__count" data-cart-count>[00]</span>
+        </a>
+
+    </div>
+</header>
+
+
+<main class="page-main">
+
+    <!-- ================================================================= -->
+    <!-- PAGE BANNER                                                       -->
+    <!-- ================================================================= -->
+    <section class="page-banner contact_p">
+        <div class="container">
+            <p class="tag">Get in touch</p>
+            <h1>Contact us</h1>
+            <p>Questions about an order, sizing or a return? Send us a message and we will reply within two working days.</p>
+        </div>
+    </section>
+
+
+    <!-- ================================================================= -->
+    <!-- CONTACT FORM + DETAILS                                            -->
+    <!-- The form is validated in js/script.js.                            -->
+    <!-- ================================================================= -->
+    <section class="section">
+        <div class="container split">
+
+            <form class="form" data-validate novalidate
+                  data-success-message="Thanks — your message has been sent. We will reply within two working days.">
+
+                <p class="form-status" data-form-status hidden></p>
+
+                <div class="form-row form-row--2">
+                    <div class="field">
+                        <label for="name">Your name</label>
+                        <input id="name" name="name" type="text"
+                               autocomplete="name" data-minlength="2" required>
+                        <span class="field__error"></span>
+                    </div>
+                    <div class="field">
+                        <label for="email">Email address</label>
+                        <input id="email" name="email" type="email"
+                               autocomplete="email" required>
+                        <span class="field__error"></span>
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label for="subject">Subject</label>
+                    <select id="subject" name="subject" required>
+                        <option value="">Choose a subject</option>
+                        <option value="order">An existing order</option>
+                        <option value="sizing">Sizing and fit</option>
+                        <option value="returns">Returns and exchanges</option>
+                        <option value="stockists">Stockists and wholesale</option>
+                        <option value="other">Something else</option>
+                    </select>
+                    <span class="field__error"></span>
+                </div>
+
+                <div class="field">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" data-minlength="20" required></textarea>
+                    <span class="field__error"></span>
+                </div>
+
+                <button class="btn btn--primary btn--lg" type="submit">Send message</button>
+            </form>
+
+            <div class="info-grid" style="grid-template-columns: 1fr;">
+                <article class="info-card">
+                    <h3>Email</h3>
+                    <p>hello@lumindeath.example<br>Replies within two working days.</p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Studio</h3>
+                    <p>Unit 4, Gasworks Yard<br>Manchester M4 5JD<br>United Kingdom</p>
+                </article>
+
+                <article class="info-card">
+                    <h3>Opening hours</h3>
+                    <p>Monday to Friday, 9am – 5pm<br>Closed weekends and bank holidays.</p>
+                </article>
+            </div>
+
+        </div>
+    </section>
+
+</main>
+
+
+<!-- ===================================================================== -->
+<!-- FOOTER                                                                -->
+<!-- ===================================================================== -->
+<footer class="site-footer">
+    <div class="container">
+
+        <div class="site-footer__grid">
+            <div>
+                <a class="brand" href="index.html">
+                    <img class="brand__mark" src="../media/images/logo.svg" alt="">
+                    <span class="brand__name">Lumin<br>Death</span>
+                </a>
+                <p class="site-footer__blurb">
+                    Independent techwear made in small runs. Every piece is cut,
+                    sewn and finished to order.
+                </p>
+                <ul class="site-footer__social">
+                    <li><a href="#" aria-label="Facebook"  style="--icon: url('../media/icons/facebook.svg')"></a></li>
+                    <li><a href="#" aria-label="X"         style="--icon: url('../media/icons/x.svg')"></a></li>
+                    <li><a href="#" aria-label="Pinterest" style="--icon: url('../media/icons/pinterest.svg')"></a></li>
+                    <li><a href="#" aria-label="Instagram" style="--icon: url('../media/icons/instagram.svg')"></a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3>Shop</h3>
+                <ul class="site-footer__links">
+                    <li><a href="products.html?category=tees">Tees</a></li>
+                    <li><a href="products.html?category=hoodies">Hoodies</a></li>
+                    <li><a href="products.html?category=outerwear">Outerwear</a></li>
+                    <li><a href="products.html?category=accessories">Accessories</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3>Help</h3>
+                <ul class="site-footer__links">
+                    <li><a href="about.html">About us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="cart.html">Your cart</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="site-footer__bar">
+            <span>© 2026 Lumin Death. All rights reserved.</span>
+            <span>Shipping worldwide · Returns within 30 days</span>
+        </div>
+
+    </div>
+</footer>
+
+<script src="../js/script.js"></script>
+</body>
+</html>

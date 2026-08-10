@@ -1,0 +1,53 @@
+/* Modern CSS Reset */
+
+/* 1. Use a more intuitive box-sizing model everywhere */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin, but only where it actually causes problems */
+* {
+  margin: 0;
+}
+
+/* 3. Add accessible line-height and font smoothing */
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 4. Improve media defaults — images/video shouldn't overflow their container */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 5. Inherit fonts for form controls (they don't by default — this trips up a lot of beginners) */
+input, button, textarea, select {
+  font: inherit;
+}
+
+/* 6. Avoid text overflow issues in headings/paragraphs */
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+
+/* 7. Balance text wrapping for headings (nice detail, decent browser support now) */
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+
+/* 8. Improve line wrapping for body copy */
+p {
+  text-wrap: pretty;
+}
+
+/* 9. Create a root stacking context, useful for #root/#__next in JS frameworks */
+#root, #__next {
+  isolation: isolate;
+}
+
+/* 10. Remove list styling ONLY where lists are used for UI/navigation, not content */
+ul[role='list'], ol[role='list'] {
+  list-style: none;
+}

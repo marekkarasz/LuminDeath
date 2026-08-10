@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Lumin Death — independent techwear. Heavyweight hoodies, tees, outerwear and accessories.">
+
+    <link rel="stylesheet" href="../css/resets.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="icon" type="image/svg+xml" href="../media/images/logo.svg">
+
+    <title>Lumin Death — Independent Techwear</title>
+</head>
+<!-- class="home" turns this page into a single full-screen landing panel:
+     the video below becomes a fixed background layer and everything else
+     floats on top of it. See section 16 of css/style.css. -->
+<body class="home">
+
+<!-- ===================================================================== -->
+<!-- VIDEO BACKGROUND                                                      -->
+<!-- Fixed behind everything, covering the full width and height of the    -->
+<!-- window. Nothing else goes in here — content belongs in <main> below.  -->
+<!-- ===================================================================== -->
+<div class="video-bg">
+    <video class="video-bg__media" poster="../media/images/hero-poster.png"
+           autoplay muted loop playsinline>
+        <source src="../media/video/mainHeroVideo.mp4" type="video/mp4">
+    </video>
+    <div class="video-bg__scrim"></div>
+</div>
+
+
+<!-- ===================================================================== -->
+<!-- HEADER                                                                -->
+<!-- ===================================================================== -->
+<header class="site-header">
+    <div class="container site-header__inner">
+
+        <a class="brand" href="index.html">
+            <img class="brand__mark" src="../media/images/logo.svg" alt="">
+            <span class="brand__name">Lumin Death</span>
+            <span class="visually-hidden">Lumin Death — home</span>
+        </a>
+
+        <button class="nav-toggle" type="button" aria-expanded="false">[+]</button>
+
+        <nav class="site-nav" aria-label="Main navigation">
+            <ul>
+                <li><a href="index.html" aria-current="page">Home [↗]</a></li>
+                <li><a href="products.html">Products [↗]</a></li>
+                <li><a href="about.html">About [↗]</a></li>
+                <li><a href="contact.html">Contact [↗]</a></li>
+            </ul>
+        </nav>
+
+        <a class="cart-link" href="cart.html">
+            <span class="shopping-cart" aria-hidden="true"></span>
+            <span class="visually-hidden">Cart</span>
+            <span class="cart-link__count" data-cart-count>[00]</span>
+        </a>
+
+    </div>
+</header>
+
+
+<main class="page-main">
+
+    <div class="pin pin--center">
+        <img class="brand__mark_center" src="../media/images/logo.svg" alt="">
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- LEFT RAIL                                                         -->
+    <!-- One pinned column running down the left of the video. Every child  -->
+    <!-- is its own .panel, all the same width, stacked with an even gap.   -->
+    <!-- Add another .panel here and it joins the stack automatically.      -->
+    <!--                                                                   -->
+    <!-- pin--left keeps the whole stack vertically centred, so the space   -->
+    <!-- above and below it stays equal however many panels it holds.       -->
+    <!-- ================================================================= -->
+    <div class="pin pin--left rail">
+
+        <div class="panel">
+            <h1 class="rail__title">Drop.04 live now</h1>
+            <p class="rail__text">Scavenge the collection before extraction closes // 48h only</p>
+        </div>
+
+        <nav class="rail__group" aria-label="Product categories">
+            <a class="panel rail__link" href="products.html?category=tees">
+                <span class="rail__index">index 01</span>
+                <span class="rail__name">Tees</span>
+            </a>
+            <a class="panel rail__link" href="products.html?category=hoodies">
+                <span class="rail__index">index 02</span>
+                <span class="rail__name">Hoodies</span>
+            </a>
+            <a class="panel rail__link" href="products.html?category=outerwear">
+                <span class="rail__index">index 03</span>
+                <span class="rail__name">Outerwear</span>
+            </a>
+            <a class="panel rail__link" href="products.html?category=accessories">
+                <span class="rail__index">index 04</span>
+                <span class="rail__name">Accessories</span>
+            </a>
+        </nav>
+
+    </div>
+    <!-- ================================================================= -->
+    <!-- RIGHT BANNER                                                      -->
+    <!--                                                                   -->
+    <!-- Full-height strip down the right edge. Desktop only — it is        -->
+    <!-- hidden below 1025px in section 17 of the stylesheet.               -->
+    <!--                                                                   -->
+    <!-- The text runs vertically via writing-mode, not a rotate            -->
+    <!-- transform, so it still wraps, selects and reads normally.          -->
+    <!-- Replace the placeholder copy below with the real wording.          -->
+    <!-- ================================================================= -->
+    <aside class="side-banner" aria-label="Featured">
+
+        <span class="side-banner__mark" aria-hidden="true">+</span>
+
+        <div class="side-banner__text">
+            <p class="side-banner__meta">
+                becouse you do not want to be saved, you want to die by Lumin
+            </p>
+            <h3 class="side-banner__title">"escape will not save you!"</h3>
+        </div>
+
+        <span class="side-banner__mark" aria-hidden="true">+</span>
+
+    </aside>
+
+</main>
+
+<script src="../js/script.js"></script>
+</body>
+</html>

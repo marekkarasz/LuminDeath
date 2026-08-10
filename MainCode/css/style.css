@@ -1,0 +1,1955 @@
+/* ------------------------------------------------------------------------- */
+/*  LUMIN DEATH — style.css                                                   */
+/*                                                                            */
+/*  Loaded after resets.css on every page.                                    */
+/*                                                                            */
+/*  CONTENTS                                                                  */
+/*   1.  FONTS ................ self-hosted @font-face rules                   */
+/*   2.  DESIGN TOKENS ........ colours, type scale, spacing, shadows          */
+/*   3.  BASE ELEMENTS ........ body, links, headings, focus ring             */
+/*   4.  LAYOUT HELPERS ....... .container, .section, .tag                     */
+/*   5.  BUTTONS .............. every clickable button style                  */
+/*   6.  HEADER / NAV ......... logo, nav links, cart link, menu button        */
+/*   7.  FOOTER ............... three-column footer + social icons           */
+/*   8.  PAGE BANNER .......... coloured strip on the four inner pages         */
+/*   9.  SECTION HEADINGS ..... heading + optional link on the right           */
+/*   10. PRODUCT CARDS ........ the card, its grid, and the category tabs      */
+/*   11. CATEGORY TILES ....... four category links (home page section)        */
+/*   12. PRODUCT DETAIL ....... pop-up panel + image gallery                   */
+/*   13. CART ................. cart rows, quantity stepper, order summary    */
+/*   14. FORMS ................ contact + checkout fields and errors          */
+/*   15. ABOUT PAGE ........... prose, info cards, image/text split           */
+/*   16. HOME PAGE ............ video panel, pins, left rail, right banner     */
+/*   17. RESPONSIVE ........... tablet and mobile breakpoints                  */
+/*   18. REDUCED MOTION ....... animation opt-out                              */
+/* ------------------------------------------------------------------------- */
+
+
+/* ------------------------------------------------------------------------- */
+/*  1. FONTS                                                                  */
+/*                                                                            */
+/*  Both families are served from media/fonts/ rather than a Google CDN, so   */
+/*  no visitor IP is sent to a third party.                                   */
+/*                                                                            */
+/*   Anton         → big display headings (hero title, section titles)        */
+/*   IBM Plex Mono → everything else (nav, body copy, buttons, prices)        */
+/*                                                                            */
+/*  Anton is split into two files: the browser only downloads the accented    */
+/*  "latin-ext" file if the page actually uses those characters.              */
+/* ------------------------------------------------------------------------- */
+
+@font-face {
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;                       /* show fallback text while loading */
+  src: url('../media/fonts/Anton-Latin.woff2') format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+                 U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122,
+                 U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Anton';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../media/fonts/Anton-LatinExt.woff2') format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+                 U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF,
+                 U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+/* IBM Plex Mono in four weights — regular body, medium nav, semibold labels,
+   bold buttons and prices. */
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../media/fonts/IBMPlexMono-Regular.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../media/fonts/IBMPlexMono-Medium.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../media/fonts/IBMPlexMono-SemiBold.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'IBM Plex Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../media/fonts/IBMPlexMono-Bold.woff2') format('woff2');
+}
+
+
+/* ------------------------------------------------------------------------- */
+/*  2. DESIGN TOKENS                                                          */
+/*                                                                            */
+/*  Every colour, size and spacing value in the site is defined once here     */
+/*  and reused by name. Change a value here and it updates site-wide.         */
+/* ------------------------------------------------------------------------- */
+
+:root {
+
+  /* ---- Font families ---------------------------------------------------- */
+  --ff-display: 'Anton', 'Arial Narrow', Impact, sans-serif;  /* headings     */
+  --ff-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace; /* everything   */
+  --ff-wordmark: 'Times New Roman', Times, serif;             /* "LUMIN DEATH"*/
+
+  /* ---- Type scale ------------------------------------------------------- */
+  --fs-hero: 4rem;        /* 64px — the rail headline on the home page        */
+  --fs-h2: 2.5rem;        /* 40px — banner titles, rail category names        */
+  --fs-h3: 2rem;          /* 32px — section headings, detail product name     */
+  --fs-h4: 1.5rem;        /* 24px — category tile names, detail price         */
+  --fs-h5: 1.3rem;        /* 21px — nav + cart links, prices, cart totals     */
+  --fs-logo: 1.5rem;      /* 24px — the "Lumin Death" wordmark                */
+  --fs-body: 1.2rem;      /* 19px — default text size                         */
+  --fs-small: 1rem;       /* 16px — product names, body copy, form fields     */
+  --fs-xs: 0.75rem;       /* 12px — buttons, meta text                        */
+  --fs-2xs: 0.6875rem;    /* 11px — tags, labels, badges                      */
+
+  /* ---- Greyscale, lightest to darkest ----------------------------------- */
+  --color-gray-100: #DDDDDD;   /* main body text on dark backgrounds          */
+  --color-gray-200: #AAAAAA;   /* nav links, secondary text                   */
+  --color-gray-300: #888888;   /* muted paragraph text                        */
+  --color-gray-400: #666666;   /* the quietest text: captions, hints          */
+  --color-gray-500: #2A2A2A;   /* borders and dividers                        */
+  --color-gray-600: #1E1E1E;   /* image wells behind product photos           */
+  --color-gray-700: #161616;   /* card and panel backgrounds                  */
+  --color-gray-800: #0C0C0C;   /* page background                             */
+
+  /* ---- Accent colours --------------------------------------------------- */
+  --color-lime: #C8FF00;       /* the brand colour: prices, CTAs, highlights  */
+  --color-red: #FF3355;        /* errors, remove buttons, cart page banner    */
+  --color-pink: #FF2D78;       /* about page banner                           */
+  --color-blue: #2D6BFF;       /* products page banner                        */
+  --color-purple: #7B2DFF;     /* the wordmark, menu button hover             */
+
+  /* Declared but not currently used — spare swatches, not dead code. */
+  --color-green: #00FF66;
+  --color-green-alt: #39FF14;
+  --color-orange: #FF4500;     /* the home page right banner                  */
+  --color-orange-alt: #FF7A00; /* contact page banner, footer social icons    */
+
+  /* ---- Brand colours taken from the original design ---------------------- */
+  --color-pink-light: #FF96A7; /* the signature hairline border on panels     */
+  --color-maroon: #290D11;     /* banner text, rail hover fill                */
+  --color-mint: #C8FFCF;       /* not currently used                          */
+
+  /* ---- Spacing scale ---------------------------------------------------- */
+  /*  Used for padding, margins and gaps so rhythm stays consistent.          */
+  --space-1: 0.25rem;     /*  4px */
+  --space-2: 0.5rem;      /*  8px */
+  --space-3: 0.75rem;     /* 12px */
+  --space-4: 1rem;        /* 16px */
+  --space-5: 1.5rem;      /* 24px */
+  --space-6: 2rem;        /* 32px */
+  --space-7: 3rem;        /* 48px */
+  --space-8: 4rem;        /* 64px */
+
+  /* ---- Shadows ---------------------------------------------------------- */
+  /*  Cards sit on a near-black page, so the "shadow" is really a soft dark   */
+  /*  pool plus a coloured outline on hover to make the lift readable.        */
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.5);
+  --shadow-card-hover: 0 10px 28px rgba(0, 0, 0, 0.65),
+                       0 0 0 1px var(--color-pink-light);
+  --shadow-panel: 0 12px 40px rgba(0, 0, 0, 0.7);
+
+  /* ---- Misc ------------------------------------------------------------- */
+  --border-soft: 1px solid var(--color-gray-500);    /* quiet divider         */
+  --page-max: 1280px;                                /* content column width  */
+  --transition: 180ms ease;                          /* shared hover timing   */
+}
+
+
+/* ------------------------------------------------------------------------- */
+/*  3. BASE ELEMENTS                                                          */
+/*                                                                            */
+/*  Site-wide defaults. resets.css has already zeroed margins and box sizing; */
+/*  this section sets the actual look.                                        */
+/* ------------------------------------------------------------------------- */
+
+/* The page is a vertical column so the footer can be pushed to the bottom
+   even on short pages (see .page-main below). */
+body {
+  background: var(--color-gray-800);
+  color: var(--color-gray-100);
+  font-family: var(--ff-mono);
+  font-size: var(--fs-body);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Links inherit their colour so each component decides its own. */
+a { color: inherit; text-decoration: none; }
+
+/* Lists are used for navigation and card grids, not bullet points. */
+ul, ol { list-style: none; padding: 0; }
+
+/* Browsers give fieldsets a border and legends odd padding — remove both. */
+fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+legend { padding: 0; }
+
+/* All headings use the condensed display face in caps. */
+h1, h2, h3 {
+  font-family: var(--ff-display);
+  font-weight: 600;
+  line-height: 1.05;
+  text-transform: uppercase;
+}
+
+/* A lime focus ring for keyboard users, shown only on keyboard focus. */
+:focus-visible {
+  outline: 2px solid var(--color-lime);
+  outline-offset: 2px;
+}
+
+/* Hides text visually but keeps it for screen readers. */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden; clip-path: inset(50%); white-space: nowrap;
+}
+
+
+/* ------------------------------------------------------------------------- */
+/*  4. LAYOUT HELPERS                                                         */
+/*                                                                            */
+/*  Reusable wrappers that control page width and vertical rhythm.            */
+/* ------------------------------------------------------------------------- */
+
+/* Grows to fill the space between header and footer, so the footer sits at
+   the bottom of the window even when a page has very little content. */
+.page-main {
+  flex: 1;
+  width: 100%;
+}
+
+/* Centres content and stops it stretching too wide on large monitors. */
+.container {
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+/* Standard vertical breathing room between major page sections. */
+.section { padding-block: var(--space-8); }
+.section--tight { padding-block: var(--space-6); }
+
+/* Small lime label sitting above a heading, e.g. "Accessories". */
+.tag {
+  display: inline-block;
+  color: var(--color-lime);
+  font-size: var(--fs-2xs);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-2);
+}
+
+
+/* ------------------------------------------------------------------------- */
+/*  5. BUTTONS                                                                */
+/*                                                                            */
+/*  Three variants, all built on the shared .btn base:                        */
+/*    .btn--primary    lime fill  — main actions (Add to Cart, Checkout)      */
+/*    .btn--secondary  outlined   — supporting actions (View Cart)            */
+/*    .btn--ghost      quiet      — destructive/minor actions (Remove)        */
+/*  Modifiers: .btn--block (full width), .btn--lg (larger).                   */
+/* ------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;    /* centres the label on both axes              */
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border: 2px solid transparent;  /* reserved so variants can colour it      */
+  border-radius: 0;               /* hard corners match the brand            */
+  background: none;
+  font-family: var(--ff-mono);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition),
+              border-color var(--transition), transform var(--transition),
+              box-shadow var(--transition);
+}
+
+/* HOVER: every button lifts slightly, then settles back when pressed. */
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(0); }
+
+/* --- Primary: solid lime, inverts to white on hover with a soft glow ----- */
+.btn--primary {
+  background: var(--color-lime);
+  color: var(--color-gray-800);
+  border-color: var(--color-lime);
+}
+
+.btn--primary:hover {
+  background: #fff;
+  border-color: #fff;
+  box-shadow: 0 6px 18px rgba(200, 255, 0, 0.25);
+}
+
+/* --- Secondary: outline that fills in on hover --------------------------- */
+.btn--secondary {
+  border-color: var(--color-pink-light);
+  color: var(--color-pink-light);
+}
+
+.btn--secondary:hover {
+  background: var(--color-pink-light);
+  color: var(--color-gray-800);
+}
+
+/* --- Ghost: near-invisible until hovered, then turns red ----------------- */
+.btn--ghost {
+  border-color: var(--color-gray-500);
+  color: var(--color-gray-200);
+  padding: var(--space-2) var(--space-3);
+}
+
+.btn--ghost:hover {
+  border-color: var(--color-red);
+  color: var(--color-red);
+}
+
+/* --- Size and width modifiers ------------------------------------------- */
+.btn--block { width: 100%; }
+.btn--lg { padding: var(--space-4) var(--space-6); font-size: var(--fs-small); }
+
+/* Disabled state — used briefly after "Add to Cart" is clicked. */
+.btn[disabled] {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+
+/* ------------------------------------------------------------------------- */
+/*  6. HEADER / NAVIGATION                                                    */
+/*                                                                            */
+/*  Sticky bar at the top of every page:                                      */
+/*    left    the logo (mark + wordmark)                                      */
+/*    right   the nav links, then the cart link                               */
+/*                                                                            */
+/*  The markup is copy-pasted into all five pages rather than generated by    */
+/*  JavaScript, so the header is in the HTML source and needs no script to    */
+/*  appear. The cost is that changing it means changing five files.           */
+/* ------------------------------------------------------------------------- */
+
+/* Stays pinned while scrolling so navigation and the cart are always
+   reachable. No bottom border — the header sits flush against the content. */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;                                    /* sits above page content */
+  background: var(--color-gray-800);
+}
+
+/* The inner div also carries .container, which normally caps content at
+   --page-max and centres it. The header ignores that cap and runs the full
+   width of the window, so the logo sits hard left and the cart hard right.
+   max-width wins over .container because this rule comes later in the file. */
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-5);
+  max-width: none;
+  min-height: 76px;
+  padding-block: var(--space-3);
+  padding-inline: var(--space-6);   /* a little more inset than .container */
+}
+
+/* --- Brand lockup -------------------------------------------------------- */
+/*  Mark and wordmark sit straight on the page — no plate behind them.        */
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-block: var(--space-2);
+}
+
+.brand__mark {
+  width: 46px;
+  height: auto;
+  flex: none;                                /* never squashed by the text   */
+}
+.brand__mark_center {
+  width: 750px;
+  height: auto;
+}
+
+/* "LUMIN / DEATH" set in a serif to contrast with the mono nav. */
+.brand__name {
+  font-family: var(--ff-wordmark);
+  font-weight: 700;
+  font-size: var(--fs-logo);
+  line-height: 0.95;                         /* tightens the two stacked lines */
+  letter-spacing: -0.04em;
+  color: var(--color-purple);
+  text-transform: uppercase;
+}
+
+/* --- Navigation links ---------------------------------------------------- */
+/*  margin-left:auto eats all the spare space in the header bar, which pushes */
+/*  the nav and the cart button after it over to the right-hand edge.         */
+
+
+
+.site-nav ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  margin: 0;
+}
+
+/* The resting colour comes from a variable so a page can change it by setting
+   --nav-link, rather than by writing a more specific selector. A heavier
+   selector would also outrank the :hover rule below and silently kill the
+   hover effect — which is exactly what the home page override used to do. */
+.site-nav a {
+  display: inline-block;
+  padding-block: var(--space-1);
+  color: var(--nav-link, var(--color-gray-200));
+  font-size: var(--fs-h5);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color var(--transition);
+}
+
+/* HOVER: colour change only, no underline. */
+.site-nav a:hover { color: var(--color-lime); }
+
+/* The link for the page you are currently on stays orange. */
+.site-nav a[aria-current='page'] { color: var(--color-orange); }
+
+/* --- Cart button --------------------------------------------------------- */
+
+/*  Styled to read as one more nav link rather than as a button: same font,
+    size, weight, letter-spacing and colour as .site-nav a, no box around it. */
+.cart-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding-block: var(--space-1);
+  color: var(--nav-link, var(--color-gray-200));
+  font-size: var(--fs-h5);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color var(--transition);
+}
+
+/* HOVER: colour change only, matching the nav links. */
+.cart-link:hover { color: var(--color-lime); }
+
+/*  The icon is sized in em, so it is measured against the link's own font
+    size — change --fs-h5 and the cart scales with the text automatically
+    instead of needing its own number.                                       */
+/*  The cart icon.
+
+    SIZE: set in em, so it is measured against the link's own font-size.
+    Change --fs-h5 and the icon scales with the text automatically.
+
+    COLOUR: the SVG file has stroke="#FF383C" baked into it, and CSS cannot
+    reach inside a file loaded through <img> to change it. So the file is not
+    drawn at all — it is used as a MASK, i.e. a stencil. The element is filled
+    with a flat colour and the mask punches the cart shape out of it, which
+    means the colour is whatever CSS says it is.
+
+    This is also why the element is a <span> and not an <img>: a span has no
+    content of its own, so the background colour IS the icon. Remove the two
+    mask lines below and the icon disappears entirely — an empty span with
+    nothing to paint.
+
+    currentColor inherits .cart-link's colour, so the icon follows the link to
+    lime on hover for free.                                                  */
+.shopping-cart {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;                   /* never squashed by the count beside it */
+  background-color: currentColor;
+  mask: url('../media/icons/Shopping cart.svg') center / contain no-repeat;
+  -webkit-mask: url('../media/icons/Shopping cart.svg') center / contain no-repeat;
+}
+
+/*  The count inherits everything from .cart-link so it matches the nav links.
+    Its square brackets are written by js/script.js, not by CSS.
+    tabular-nums keeps every digit the same width, so the header does not
+    twitch sideways when the count goes from 09 to 10.                       */
+.cart-link__count {
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Mobile menu button --------------------------------------------------- */
+/*  Hidden on desktop; the responsive section at the bottom reveals it.       */
+
+/*  The resting border is transparent rather than absent. A button with no
+    border that gains one on hover grows by 2px and shoves its neighbours
+    sideways — reserving the space keeps the hover purely visual.            */
+.nav-toggle {
+  display: none;
+  padding: var(--space-2) var(--space-3);
+  background: none;
+  border: 1px solid transparent;
+  color: var(--color-lime);
+  font-family: var(--ff-mono);
+  font-size: var(--fs-body);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.nav-toggle:hover {
+  border-color: var(--color-purple);
+  color: var(--color-purple);
+}
+
+
+/* ------------------------------------------------------------------------- */
+/*  7. FOOTER                                                                 */
+/*                                                                            */
+/*  Three columns — brand blurb, shop links, help links — with a social row   */
+/*  and a copyright bar underneath. Copy-pasted into all five pages.          */
+/* ------------------------------------------------------------------------- */
+
+.site-footer {
+  background: #000;                            /* darker than the page       */
+  border-top: 4px solid var(--color-pink-light);
+  padding-block: var(--space-7) var(--space-5);
+  margin-top: var(--space-8);                  /* keeps it off the content    */
+}
+
+/* Wider first column for the brand blurb, two equal link columns after it. */
+.site-footer__grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.site-footer__blurb {
+  color: var(--color-gray-300);
+  font-size: var(--fs-xs);
+  max-width: 34ch;                             /* keeps the line length short */
+  margin-top: var(--space-3);
+}
+
+/* Footer column titles: small lime mono caps rather than the display face. */
+.site-footer h3 {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--color-lime);
+  margin-bottom: var(--space-3);
+}
+
+.site-footer__links li + li { margin-top: var(--space-2); }
+
+.site-footer__links a {
+  color: var(--color-gray-300);
+  font-size: var(--fs-xs);
+  transition: color var(--transition), padding-left var(--transition);
+}
+
+/* HOVER: the link brightens and nudges to the right. */
+.site-footer__links a:hover {
+  color: var(--color-lime);
+  padding-left: var(--space-2);
+}
+
+.site-footer__social {
+  display: flex;
+  gap: var(--space-4);
+  margin-top: var(--space-3);
+}
+
+/* The icons are SVG files applied as a mask, not as <img>. That lets the
+   colour be set here in CSS (an SVG inside <img> cannot inherit a colour). */
+.site-footer__social a {
+  display: block;
+  width: 22px;
+  height: 22px;
+  background-color: var(--color-orange-alt);   /* this is the visible icon colour */
+  mask: var(--icon) center / contain no-repeat;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  transition: background-color var(--transition), transform var(--transition);
+}
+
+/* HOVER: icon turns lime and lifts. */
+.site-footer__social a:hover {
+  background-color: var(--color-lime);
+  transform: translateY(-2px);
+}
+
+/* Bottom strip: copyright on the left, small print on the right. */
+.site-footer__bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+  padding-top: var(--space-4);
+  border-top: var(--border-soft);
+  color: var(--color-gray-400);
+  font-size: var(--fs-2xs);
+}
+
+
+/* ------------------------------------------------------------------------- */
+/*  8. PAGE BANNER                                                            */
+/*                                                                            */
+/*  The coloured strip at the top of products, cart, about and contact.       */
+/*  .page-banner sets the shape and type; a second class per page sets the    */
+/*  colour. Splitting the two keeps all four banners identical in size while  */
+/*  each page keeps its own identity — a fifth page is one new colour class.  */
+/* ------------------------------------------------------------------------- */
+
+/* --- Inner-page banner --------------------------------------------------- */
+/*  Used on products, cart, about and contact so each page opens with the     */
+/*  same shape as the home hero, just shorter and without video.              */
+
+.page-banner {
+  padding-block: var(--space-7);
+}
+.prod_p{
+  background-color: var(--color-blue);
+}
+.about_p{
+  background-color: var(--color-pink);
+}
+.contact_p{
+  background-color: var(--color-orange-alt);
+}
+.cart_p{
+ background-color: var(--color-red);
+}
+
+.page-banner h1 {
+  font-size: var(--fs-h2);
+  color: var(--color-maroon);
+}
+
+.page-banner p {
+  color: black;
+  font-size: var(--fs-small);
+  margin-top: var(--space-3);
+  max-width: 56ch;
+}
+
+
+/* ------------------------------------------------------------------------- */
+/*  9. SECTION HEADINGS                                                       */
+/*                                                                            */
+/*  A heading on the left with an optional link on the right, e.g.            */
+/*  "Featured Products ............................ View all products".       */
+/* ------------------------------------------------------------------------- */
+
+.section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;              /* baselines line up despite size gap   */
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.section-head h2 {
+  font-size: var(--fs-h3);
+  color: #fff;
+}
+
+.section-head__link {
+  color: var(--color-lime);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: padding-right var(--transition);
+}
+
+/* HOVER: extra padding nudges the arrow away from the text. */
+.section-head__link:hover { padding-right: var(--space-2); }
+
+
+/* ------------------------------------------------------------------------- */
+/*  10. PRODUCT CARDS                                                         */
+/*                                                                            */
+/*  Card contents, top to bottom:                                             */
+/*    image (with a category badge over it) → name → price → Add to Cart      */
+/*  Cards are built by JavaScript from the PRODUCTS list in js/script.js.     */
+/* ------------------------------------------------------------------------- */
+
+/* Four across on desktop; the responsive section drops this to 2 then 1. */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+}
+
+/* A column so the button can be pinned to the bottom of every card, keeping
+   all buttons in a row aligned even when names run to different lengths. */
+.product-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-gray-700);
+  border: 1px solid var(--color-gray-500);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition), box-shadow var(--transition),
+              border-color var(--transition);
+}
+
+/* HOVER: the card lifts, its shadow deepens and a pink outline appears. */
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--shadow-card-hover);
+  border-color: transparent;     /* the outline is drawn by the shadow now   */
+}
+
+/* Fixed 4:5 frame so every card is the same height whatever the photo. */
+.product-card__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;              /* clips the image as it zooms on hover     */
+  background: var(--color-gray-600);
+}
+
+.product-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;             /* fills the frame without distortion       */
+  transition: transform 400ms ease;
+}
+
+/* HOVER: slow zoom on the photo inside its fixed frame. */
+.product-card:hover .product-card__media img { transform: scale(1.06); }
+
+/* Shown instead of a photo for products whose images have not arrived yet.
+   The diagonal stripes make it obvious it is a placeholder, not a design. */
+.product-card__placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  background:
+    repeating-linear-gradient(45deg,
+      var(--color-gray-600) 0 10px,
+      var(--color-gray-700) 10px 20px);
+  color: var(--color-gray-400);
+  font-size: var(--fs-2xs);
+  letter-spacing: 0.12em;
+  text-align: center;
+}
+
+.product-card__placeholder img { width: 44px; height: auto; opacity: 0.5; }
+
+/* Category badge sitting over the top-left of the photo. */
+.product-card__category {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  padding: 0.25em 0.6em;
+  background: rgba(12, 12, 12, 0.85);   /* dark pill keeps it legible        */
+  color: var(--color-lime);
+  font-size: var(--fs-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.product-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex: 1;                        /* absorbs spare height, pinning the price */
+  padding: var(--space-4);
+}
+
+.product-card__name {
+  font-family: var(--ff-mono);    /* overrides the display face on h3        */
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: #fff;
+  text-transform: none;
+  line-height: 1.35;
+}
+
+.product-card__name a:hover { color: var(--color-lime); }
+
+/* margin-top:auto pushes the price to the bottom of the body, so prices line
+   up across a row even when one product name wraps onto two lines. */
+.product-card__price {
+  font-size: var(--fs-h5);
+  font-weight: 700;
+  color: var(--color-lime);
+  margin-top: auto;
+  padding-top: var(--space-2);
+}
+
+.product-card__actions {
+  display: flex;
+  gap: var(--space-2);
+  padding: 0 var(--space-4) var(--space-4);
+}
+
+.product-card__actions .btn { flex: 1; }   /* button spans the card width    */
+
+/* --- Category tabs above the products grid ------------------------------- */
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.filter-bar__btn {
+  padding: var(--space-2) var(--space-4);
+  border: 2px solid var(--color-gray-500);
+  background: none;
+  color: var(--color-gray-200);
+  font-family: var(--ff-mono);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color var(--transition), color var(--transition),
+              background var(--transition);
+}
+
+.filter-bar__btn:hover {
+  border-color: var(--color-lime);
+  color: var(--color-lime);
+}
+
+/* The selected tab is filled in. JavaScript sets aria-pressed, which doubles
+   as the styling hook and as the accessibility state. */
+.filter-bar__btn[aria-pressed='true'] {
+  background: var(--color-lime);
+  border-color: var(--color-lime);
+  color: var(--color-gray-800);
+}
+
+/* "12 products" line under the tabs. */
+.result-count {
+  color: var(--color-gray-400);
+  font-size: var(--fs-xs);
+  margin-bottom: var(--space-4);
+}
+
+
+/* ------------------------------------------------------------------------- */
+/*  11. CATEGORY TILES                                                        */
+/*                                                                            */
+/*  Four links on the home page that jump into a filtered products page.      */
+/* ------------------------------------------------------------------------- */
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+}
+
+.category-tile {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: 120px;
+  padding: var(--space-5);
+  background: var(--color-gray-700);
+  border: 2px solid var(--color-pink-light);
+  box-shadow: var(--shadow-card);
+  transition: background var(--transition), transform var(--transition),
+              box-shadow var(--transition);
+}
+
+/* HOVER: tile lifts and its background warms to the brand maroon. */
+.category-tile:hover {
+  background: var(--color-maroon);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.category-tile__name {
+  font-family: var(--ff-display);
+  font-size: var(--fs-h4);
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.category-tile__meta {
+  color: var(--color-lime);
+  font-size: var(--fs-2xs);
+  letter-spacing: 0.12em;
+}
+
+
+/* ------------------------------------------------------------------------- */
+/*  12. PRODUCT DETAIL PANEL                                                  */
+/*                                                                            */
+/*  Opens over products.html when a card is clicked. Built by JavaScript and  */
+/*  shown by adding .is-open to the backdrop.                                 */
+/* ------------------------------------------------------------------------- */
+
+/* Covers the whole window and dims the page behind. display:none while
+   closed; the .is-open class switches it to flex to centre the panel. */
+.detail-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 100;                    /* above the sticky header (z-index 50)   */
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-5);
+  background: rgba(0, 0, 0, 0.82);
+}
+
+.detail-backdrop.is-open { display: flex; }
+
+/* Image on the left, details on the right. Capped at 90vh so a long
+   description scrolls inside the panel rather than off the screen. */
+.detail {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: min(980px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: var(--color-gray-700);
+  border: 2px solid var(--color-pink-light);
+  box-shadow: var(--shadow-panel);
+}
+
+/* --- The image gallery ---------------------------------------------------- */
+/*  One large photo with a row of thumbnails under it. JavaScript builds this  */
+/*  from the product's `images` array and swaps the large photo on click.      */
+/*  A product with a single photo gets no thumbnail strip at all.              */
+
+.detail__media {
+  display: flex;
+  flex-direction: column;
+  background: var(--color-gray-600);
+  overflow: hidden;
+}
+
+.gallery {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  height: 100%;
+  padding: var(--space-2);
+}
+
+/*  flex:1 lets the main image take whatever height is left after the
+    thumbnails, so the panel keeps the same overall shape whether a product
+    has one photo or five.                                                    */
+.gallery__main {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--color-gray-600);
+}
+
+.gallery__main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/*  Thumbnails share the row evenly, so two sit half-and-half and four sit
+    at a quarter each without needing a fixed count anywhere.                 */
+.gallery__thumbs {
+  display: flex;
+  gap: var(--space-2);
+  flex: none;
+}
+
+.gallery__thumb {
+  flex: 1;
+  aspect-ratio: 1;
+  padding: 0;
+  overflow: hidden;
+  background: var(--color-gray-600);
+  border: 2px solid transparent;
+  cursor: pointer;
+  opacity: 0.55;
+  transition: opacity var(--transition), border-color var(--transition);
+}
+
+.gallery__thumb img { width: 100%; height: 100%; object-fit: cover; }
+
+/* HOVER: brightens to preview which shot you are about to open. */
+.gallery__thumb:hover { opacity: 1; }
+
+/* The thumbnail currently shown large — full opacity with a lime edge. */
+.gallery__thumb.is-active {
+  opacity: 1;
+  border-color: var(--color-lime);
+}
+
+.detail__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-6);
+}
+
+.detail__name {
+  font-size: var(--fs-h3);
+  color: #fff;
+}
+
+.detail__price {
+  font-size: var(--fs-h4);
+  font-weight: 700;
+  color: var(--color-lime);
+}
+
+.detail__text {
+  color: var(--color-gray-200);
+  font-size: var(--fs-small);
+}
+
+/* Two-column spec table: label left, value right-aligned against it. */
+.detail__specs {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-2) var(--space-5);
+  margin: 0;
+  padding-top: var(--space-4);
+  border-top: var(--border-soft);
+  font-size: var(--fs-xs);
+}
+
+.detail__specs dt { color: var(--color-gray-400); text-transform: uppercase; }
+.detail__specs dd { color: var(--color-gray-100); margin: 0; text-align: right; }
+
+/* Close button floating over the top-right corner of the panel. */
+.detail__close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 40px;
+  height: 40px;
+  background: rgba(12, 12, 12, 0.9);
+  border: 1px solid var(--color-gray-500);
+  color: var(--color-gray-100);
+  font-size: var(--fs-h5);
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* HOVER: turns red to signal it closes/discards. */
+.detail__close:hover { background: var(--color-red); color: #fff; }
+
+
+/* ------------------------------------------------------------------------- */
+/*  13. CART                                                                  */
+/*                                                                            */
+/*  Cart rows on the left, a sticky order summary on the right.               */
+/*  All quantities and totals are written by JavaScript.                      */
+/* ------------------------------------------------------------------------- */
+
+.cart-layout {
+  display: grid;
+  grid-template-columns: 1fr 360px;   /* flexible list, fixed summary column */
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.cart-list { display: grid; gap: var(--space-4); }
+
+/* One row per product: thumbnail | name and price | quantity and total. */
+.cart-item {
+  display: grid;
+  grid-template-columns: 110px 1fr auto;
+  gap: var(--space-5);
+  align-items: center;
+  padding: var(--space-4);
+  background: var(--color-gray-700);
+  border: 1px solid var(--color-gray-500);
+  box-shadow: var(--shadow-card);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+/* HOVER: outline picks up the brand pink so the active row is obvious. */
+.cart-item:hover {
+  border-color: var(--color-pink-light);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.cart-item__media {
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  background: var(--color-gray-600);
+}
+
+.cart-item__media img { width: 100%; height: 100%; object-fit: cover; }
+
+.cart-item__info { display: grid; gap: var(--space-1); }
+
+/* Mono rather than the display face, so it matches the product card name. */
+.cart-item__name {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  color: #fff;
+  text-transform: none;
+}
+
+.cart-item__category {
+  color: var(--color-lime);
+  font-size: var(--fs-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.cart-item__unit { color: var(--color-gray-400); font-size: var(--fs-xs); }
+
+.cart-item__controls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;             /* right-aligns stepper, total, remove  */
+  gap: var(--space-3);
+}
+
+/* --- Quantity stepper: [ − ] 2 [ + ] ------------------------------------- */
+
+.qty {
+  display: inline-flex;
+  align-items: center;
+  border: 2px solid var(--color-gray-500);
+}
+
+.qty__btn {
+  width: 34px;
+  height: 34px;                      /* square, comfortable tap target       */
+  background: none;
+  border: 0;
+  color: var(--color-gray-100);
+  font-family: var(--ff-mono);
+  font-size: var(--fs-body);
+  cursor: pointer;
+  transition: background var(--transition), color var(--transition);
+}
+
+/* HOVER: the − / + fills lime so it reads as pressable. */
+.qty__btn:hover { background: var(--color-lime); color: var(--color-gray-800); }
+
+/* Fixed width stops the row jumping when the number goes 9 → 10. */
+.qty__value {
+  min-width: 44px;
+  text-align: center;
+  font-size: var(--fs-small);
+  font-weight: 600;
+}
+
+.cart-item__line-total {
+  font-size: var(--fs-h5);
+  font-weight: 700;
+  color: var(--color-lime);
+}
+
+/* --- Order summary ------------------------------------------------------- */
+/*  Sticks below the header while the cart list scrolls past it.             */
+
+.cart-summary {
+  position: sticky;
+  top: 100px;                        /* clears the 76px sticky header        */
+  padding: var(--space-5);
+  background: var(--color-gray-700);
+  border: 2px solid var(--color-lime);   /* lime border marks it as the CTA  */
+  box-shadow: var(--shadow-card);
+}
+
+.cart-summary h2 {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-2xs);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--color-lime);
+  margin-bottom: var(--space-4);
+}
+
+/* Label left, amount right. */
+.cart-summary__row {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding-block: var(--space-2);
+  font-size: var(--fs-xs);
+  color: var(--color-gray-300);
+}
+
+.cart-summary__row span:last-child { color: var(--color-gray-100); }
+
+/* The final total is larger, lime and separated by a rule. */
+.cart-summary__row--total {
+  margin-top: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: var(--border-soft);
+  font-size: var(--fs-h5);
+  font-weight: 700;
+  color: var(--color-lime);
+}
+
+.cart-summary__row--total span:last-child { color: var(--color-lime); }
+
+.cart-summary .btn { margin-top: var(--space-5); }
+
+/* Shown in place of the list and summary when the cart has nothing in it.
+   The dashed border signals an empty slot rather than a real panel. */
+.cart-empty {
+  padding: var(--space-8) var(--space-5);
+  text-align: center;
+  border: 2px dashed var(--color-gray-500);
+}
+
+.cart-empty h2 {
+  font-size: var(--fs-h4);
+  color: #fff;
+  margin-bottom: var(--space-3);
+}
+
+.cart-empty p {
+  color: var(--color-gray-300);
+  font-size: var(--fs-small);
+  margin-bottom: var(--space-5);
+}
+
+
+/* ------------------------------------------------------------------------- */
+/*  14. FORMS                                                                 */
+/*                                                                            */
+/*  Shared by the contact form and the checkout form. JavaScript adds         */
+/*  .is-invalid to a .field to turn its border red and reveal the message.    */
+/* ------------------------------------------------------------------------- */
+
+.form { display: grid; gap: var(--space-5); }
+
+.form-row { display: grid; gap: var(--space-4); }
+.form-row--2 { grid-template-columns: repeat(2, 1fr); }  /* e.g. first/last name */
+
+/* One label + input + error message. */
+.field { display: grid; gap: var(--space-2); }
+
+.field label {
+  color: var(--color-gray-300);
+  font-size: var(--fs-2xs);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  padding: var(--space-3);
+  background: var(--color-gray-800);
+  border: 2px solid var(--color-gray-500);
+  border-radius: 0;
+  color: var(--color-gray-100);
+  font-family: var(--ff-mono);       /* browsers default to their own font   */
+  font-size: var(--fs-small);
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+
+.field textarea { min-height: 160px; resize: vertical; }
+
+/* HOVER: the border lightens so the field reads as interactive. */
+.field input:hover,
+.field textarea:hover,
+.field select:hover { border-color: var(--color-gray-400); }
+
+/* FOCUS: lime border plus a soft glow marks the active field. */
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  outline: 0;
+  border-color: var(--color-lime);
+  box-shadow: 0 0 0 3px rgba(200, 255, 0, 0.12);
+}
+
+/* min-height reserves the line so the layout does not jump when an error
+   message appears or disappears. */
+.field__error {
+  color: var(--color-red);
+  font-size: var(--fs-2xs);
+  min-height: 1em;
+}
+
+.field.is-invalid input,
+.field.is-invalid textarea,
+.field.is-invalid select { border-color: var(--color-red); }
+
+/* Success message shown after a valid submit. */
+.form-status {
+  padding: var(--space-4);
+  border: 2px solid var(--color-lime);
+  color: var(--color-lime);
+  font-size: var(--fs-small);
+}
+
+.form-status[hidden] { display: none; }
+
+
+/* ------------------------------------------------------------------------- */
+/*  15. ABOUT PAGE                                                            */
+/*                                                                            */
+/*  Long-form text, a row of info cards and an image/text split.              */
+/* ------------------------------------------------------------------------- */
+
+/* Caps line length at roughly 68 characters for comfortable reading. */
+.prose { max-width: 68ch; }
+
+.prose p {
+  color: var(--color-gray-200);
+  font-size: var(--fs-small);
+  margin-bottom: var(--space-4);
+}
+
+.prose h2 {
+  font-size: var(--fs-h4);
+  color: #fff;
+  margin-block: var(--space-6) var(--space-3);
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-5);
+}
+
+.info-card {
+  padding: var(--space-5);
+  background: var(--color-gray-700);
+  border: 1px solid var(--color-gray-500);
+  box-shadow: var(--shadow-card);
+  transition: transform var(--transition), box-shadow var(--transition),
+              border-color var(--transition);
+}
+
+/* HOVER: matches the product card lift so the site feels consistent. */
+.info-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--color-pink-light);
+  box-shadow: var(--shadow-card-hover);
+}
+
+.info-card h3 {
+  font-family: var(--ff-mono);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-lime);
+  margin-bottom: var(--space-3);
+}
+
+.info-card p {
+  color: var(--color-gray-300);
+  font-size: var(--fs-xs);
+}
+
+/* Image beside text, stacking on tablet and below. */
+.split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-7);
+  align-items: start;
+}
+
+/*  Holds one OR several images stacked down the column.
+
+    The aspect-ratio lives on each image rather than on the container. Put it
+    on the container and it becomes one 4:3 box — the first image fills it and
+    every image after that is pushed outside and clipped away by
+    overflow:hidden. That is silent: the extra photos are in the HTML, they
+    just never appear. Sizing each image individually means the container
+    grows to fit however many there are.                                     */
+.split__media {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.split__media img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  box-shadow: var(--shadow-card);
+}
+
+
+/* ------------------------------------------------------------------------- */
+/*  16. HOME PAGE — FULL-SCREEN VIDEO BACKGROUND                              */
+/*                                                                            */
+/*  index.html is a single landing panel: the video covers the entire window   */
+/*  as a background layer, and every other element floats on top of it.        */
+/*                                                                            */
+/*  The stack, back to front:                                                 */
+/*    z-index 0   .video-bg     the video, fixed, covering the whole window    */
+/*    z-index 1   .page-main    a transparent full-screen layer for content    */
+/*    z-index 50  .site-header  the glass nav bar                              */
+/*                                                                            */
+/*  Everything is scoped to <body class="home"> so the other four pages keep   */
+/*  their normal solid header and normal scrolling.                           */
+/*                                                                            */
+/*  Heights use svh ("small viewport height") — the viewport height with       */
+/*  mobile browser toolbars showing. Unlike vh it does not change as those     */
+/*  toolbars hide, so the panel never jumps or overflows on a phone.           */
+/* ------------------------------------------------------------------------- */
+
+/* Locks the page to exactly one screen. overflow:hidden stops a stray
+   scrollbar appearing if a child rounds up by a fraction of a pixel. */
+.home {
+  /* Height of the floating header bar. The mid-edge pins below subtract it so
+     a centred block sits in the visible area rather than under the bar. Keep
+     this in step with the min-height on .site-header__inner. */
+  --header-h: 76px;
+
+  height: 100svh;
+  overflow: hidden;
+}
+
+
+/* --- The video layer ------------------------------------------------------ */
+/*  position:fixed with inset:0 pins it to all four edges of the window, so it */
+/*  covers the full width and height regardless of what content sits above.    */
+
+.video-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  background: #000;      /* shows before the first frame paints */
+  overflow: hidden;
+}
+
+/* object-fit:cover fills the window without distorting the footage — the
+   video is cropped rather than stretched, whatever the window's shape. */
+.video-bg__media {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* A soft vignette over the footage: a little shade at the top so the nav
+   links stay legible, a little at the base to seat the panel, and clear
+   video through the middle. Delete this rule for completely untouched
+   footage, or raise the alpha values to darken it behind future content.
+   pointer-events:none so it never swallows a click. */
+.video-bg__scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to bottom,
+      rgba(12, 12, 12, 0.55) 0%,
+      rgba(12, 12, 12, 0.10) 22%,
+      rgba(12, 12, 12, 0) 55%,
+      rgba(12, 12, 12, 0.35) 100%);
+}
+
+
+/* --- The content layer ---------------------------------------------------- */
+/*  <main> becomes a transparent full-screen sheet over the video. It is the   */
+/*  positioning context for the .pin helpers below, so anything dropped in     */
+/*  here can be placed anywhere on the panel.                                  */
+
+/*  overflow:hidden matters here, not just on .home. The pins inside are
+    absolutely positioned, so anything that overhangs grows this element's
+    scroll height and the document scrolls — even though body is already
+    overflow:hidden. Clipping at this level keeps the page to one screen
+    whatever gets pinned onto it.                                            */
+.home .page-main {
+  position: relative;
+  z-index: 1;
+  height: 100svh;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* Pin a block to an edge or the middle of the video. Add .pin plus one
+   position modifier:  <div class="pin pin--bottom-left"> … </div>          */
+.home .pin {
+  position: absolute;
+  z-index: 2;
+  max-width: min(38rem, calc(100% - var(--space-6) * 2));
+}
+
+/* --- Corners: the top ones are offset by the header so they clear it ------- */
+.home .pin--top-left     { top: calc(var(--header-h) + var(--space-6)); left: var(--space-6); }
+.home .pin--top-right    { top: calc(var(--header-h) + var(--space-6)); right: var(--space-6); }
+.home .pin--bottom-left  { bottom: var(--space-6); left: var(--space-6); }
+.home .pin--bottom-right { bottom: var(--space-6); right: var(--space-6); }
+
+/* --- Mid-edge: pinned to one side, vertically centred --------------------- */
+/*                                                                            */
+/*  Centred in the space BELOW the header, not in the whole window. Centring   */
+/*  on the window itself would tuck the top of a tall block underneath the     */
+/*  header bar, since the header floats over the video rather than pushing     */
+/*  content down.                                                             */
+/*                                                                            */
+/*  How the top value works:                                                  */
+/*    var(--header-h)              start below the header                      */
+/*    + (100svh - --header-h) / 2  move to the middle of what is left          */
+/*    translateY(-50%)             pull back by half the block's own height    */
+/*                                                                            */
+/*  The result is an equal gap above and below the block however tall it is.  */
+
+.home .pin--left,
+.home .pin--right {
+  top: calc(var(--header-h) + (100svh - var(--header-h)) / 2);
+  transform: translateY(-50%);
+}
+
+.home .pin--left  { left: var(--space-6); }
+.home .pin--right { right: var(--space-6); }
+
+/* --- Dead centre of the window ------------------------------------------- */
+.home .pin--center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+/* Optional backing for a pinned block, so text stays readable over busy
+   footage. Same frosted-glass treatment as the header. */
+.home .panel {
+  padding: var(--space-4);
+}
+
+
+/* --- The left rail -------------------------------------------------------- */
+/*                                                                            */
+/*  A .pin fixes ONE block to ONE corner — it cannot flow a series of blocks   */
+/*  down the page. The rail is that missing piece: a single pinned column      */
+/*  whose children are each their own .panel, all the same width, stacked      */
+/*  one under the other with an even gap.                                     */
+/*                                                                            */
+/*  Add another .panel inside .rail and it joins the stack automatically.     */
+/*                                                                            */
+/*  Two numbers control the whole column:                                     */
+/*    --rail-width  how wide every panel in the column is                      */
+/*    --rail-gap    the space between them                                     */
+/* ------------------------------------------------------------------------- */
+
+.home .rail {
+  --rail-width: 35rem;
+  --rail-gap: var(--space-6);   /* space-7 made the stack overrun a 900px screen */
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+  width: var(--rail-width);
+  max-width: calc(100% - var(--space-6) * 2);   /* never wider than the screen */
+}
+
+/*  The category links are wrapped in a <nav> for semantics, which would
+    otherwise become one item in the column. Giving it the same gap makes the
+    whole rail read as one evenly spaced stack.                               */
+.home .rail__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--rail-gap);
+}
+
+/* --- The drop panel ------------------------------------------------------- */
+
+.home .rail__title {
+  font-size: var(--fs-hero);
+  color: var(--color-lime);
+  letter-spacing: 0.05em;
+}
+
+.home .rail__text {
+  margin-top: var(--space-2);
+  color: var(--color-gray-100);
+  font-size: var(--fs-small);
+  text-transform: uppercase;
+}
+
+/* --- The category panels -------------------------------------------------- */
+/*  min-height keeps all four identical regardless of the label length, so the */
+/*  column reads as a set of matching blocks.                                  */
+
+/*  position:relative anchors the animated bar in the ::after below.          */
+.home .rail__link {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-height: 6rem;
+  padding-block: var(--space-3);
+  transition: background var(--transition), border-color var(--transition),
+              transform var(--transition);
+}
+
+/*  The sweeping bottom border.                                               */
+/*  It is drawn at full width but squashed to nothing with scaleX(0), then     */
+/*  released to scaleX(1) on hover. transform-origin:left makes it grow out    */
+/*  from the left edge rather than opening from the middle.                    */
+/*                                                                            */
+/*  Animating a transform is smooth because it never re-runs layout —          */
+/*  animating `width` from 0 would make the browser reflow on every frame.     */
+.home .rail__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;                       /* just inside the panel's own border */
+  height: 3px;
+  background: var(--color-lime);
+  box-shadow: 0 0 10px rgba(200, 255, 0, 0.8);
+  pointer-events: none;            /* never swallows a click on the link */
+
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 320ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* HOVER: the bar sweeps across and the panel nudges sideways. */
+.home .rail__link:hover::after { transform: scaleX(1); }
+
+.home .rail__link:hover { transform: translateX(6px); }
+
+/*  The index number lights up on hover. Two stacked shadows read as a glow:   */
+/*  a tight bright one for the filament, a wide faint one for the halo.       */
+.home .rail__index {
+  color: var(--color-lime);
+  font-size: var(--fs-small);
+  letter-spacing: 0.12em;
+  border-bottom: 1px solid var(--color-lime);
+  transition: color var(--transition), text-shadow var(--transition);
+}
+
+.home .rail__link:hover .rail__index {
+  color: #fff;
+  text-shadow:
+    0 0 8px rgba(200, 255, 0, 0.95),
+    0 0 22px rgba(200, 255, 0, 0.6);
+}
+
+.home .rail__name {
+  font-family: var(--ff-display);
+  font-size: var(--fs-h2);
+  color: #fff;
+  text-transform: uppercase;
+}
+
+
+/* --- The right banner ----------------------------------------------------- */
+/*                                                                            */
+/*  A full-height strip down the right edge of the window with its text        */
+/*  running vertically. Desktop only — section 17 hides it below 1025px,       */
+/*  where a fixed 190px column would eat too much of the screen.               */
+/*                                                                            */
+/*  The text is turned with writing-mode rather than transform: rotate.        */
+/*  A rotate would spin the element after layout, so the browser would still   */
+/*  reserve a wide horizontal box and long text would overflow instead of      */
+/*  wrapping. writing-mode changes the direction text actually flows in, so    */
+/*  it wraps, selects and reads normally — just downward.                      */
+/*                                                                            */
+/*  Two numbers control it:                                                    */
+/*    --side-banner-width  how wide the strip is                               */
+/*    --side-banner-size   the size of the big title                           */
+/* ------------------------------------------------------------------------- */
+
+.side-banner {
+  --side-banner-width: 190px;
+  --side-banner-size: 4.5rem;
+
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;                       /* top + bottom = the full window height */
+  z-index: 40;                     /* under the header (50), over the rail  */
+
+  width: var(--side-banner-width);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;  /* a mark at each end, text in between   */
+
+  /*  The strip itself runs the full height of the window, but its contents
+      start below the header — otherwise the top mark sits behind the header
+      bar and the text block reads as sitting too high.                     */
+  padding-top: calc(var(--header-h) + var(--space-5));
+  padding-bottom: var(--space-5);
+
+  /* Same frosted glass as the header, so the two read as one system. */
+  background-color: var(--color-orange);
+}
+
+/*  The + marks at the top and bottom of the strip. */
+.side-banner__mark {
+  flex: none;
+  color: var(--color-maroon);
+  font-size: var(--fs-h3);
+  line-height: 1;
+}
+
+/*  flex:1 makes this take all the height between the two marks, then centres
+    the text inside it. The row runs left to right, so the meta line sits to
+    the left of the title exactly as in the reference. */
+.side-banner__text {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  overflow: hidden;
+}
+
+/*  vertical-rl turns the flow 90° clockwise: text reads top to bottom with
+    the glyphs on their side. This is the same orientation used on spines. */
+.side-banner__title {
+  writing-mode: vertical-rl;
+  margin: 0;
+  font-family: var(--ff-display);
+  font-size: var(--side-banner-size);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  color: var(--color-maroon);
+  text-transform: uppercase;
+  white-space: nowrap;             /* the title stays on one line */
+}
+
+/*  The small print beside it, same direction, much quieter. */
+.side-banner__meta {
+  writing-mode: vertical-rl;
+  margin: 0;
+  max-height: 100%;
+  color: var(--color-maroon);
+  font-size: var(--fs-small);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+
+/* --- The header ----------------------------------------------------------- */
+/*  position:fixed lifts it out of the flow so the video runs edge to edge     */
+/*  underneath it rather than starting below it.                               */
+
+.home .site-header {
+  position: fixed;
+  inset: 0 0 auto 0;               /* pinned to the top, full width */
+  z-index: 50;
+
+  /* Frosted glass: a light dark tint plus a blur of the video behind it.
+     The tint alone would hide the footage and the blur alone would not give
+     the links enough contrast — together the video still reads through while
+     the text stays legible over any frame. Raise the alpha below if a very
+     bright video ever makes the links hard to read. */
+  background: rgba(12, 12, 12, 0.3);
+  backdrop-filter: blur(14px) saturate(130%);
+  -webkit-backdrop-filter: blur(14px) saturate(130%);
+}
+
+/* Slightly brighter nav text than the default grey, because it now sits over
+   moving footage rather than a flat dark bar. Setting the variable rather
+   than the colour keeps the :hover and current-page rules working. */
+.home { --nav-link: var(--color-gray-100); }
+
+
+/* ------------------------------------------------------------------------- */
+/*  17. RESPONSIVE                                                            */
+/*                                                                            */
+/*  Two breakpoints:                                                          */
+/*    ≤ 1024px  tablet — grids halve, nav collapses behind a Menu button      */
+/*    ≤ 640px   mobile — everything becomes a single column                   */
+/* ------------------------------------------------------------------------- */
+
+/* ---- TABLET ------------------------------------------------------------- */
+@media (max-width: 1024px) {
+
+  /* Four-across grids drop to two. */
+  .product-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .category-grid { grid-template-columns: repeat(2, 1fr); }
+
+  /* Side-by-side layouts stack. */
+  .info-grid { grid-template-columns: 1fr; }
+  .split { grid-template-columns: 1fr; gap: var(--space-5); }
+
+  /* The cart summary drops below the list and stops sticking. */
+  .cart-layout { grid-template-columns: 1fr; }
+  .cart-summary { position: static; }
+
+  .site-footer__grid { grid-template-columns: 1fr 1fr; }
+
+  /* Detail panel goes image-on-top instead of side-by-side. */
+  /* Image on top, details underneath. The main photo goes landscape so the
+     gallery does not push the price and Add to Cart off the screen. */
+  .detail { grid-template-columns: 1fr; }
+  .gallery__main { aspect-ratio: 16 / 10; }
+  .gallery__thumb { aspect-ratio: 4 / 3; }
+
+  /* --- Navigation collapses behind the Menu button --- */
+  /*  The nav drops to its own row, so the job of pushing things to the right
+      edge moves from .site-nav to the Menu button: logo on the left, then
+      Menu and Cart together on the right. */
+  .nav-toggle {
+    display: inline-block;
+    margin-left: auto;
+  }
+
+  .site-header__inner { flex-wrap: wrap; }
+
+  /* order:3 moves the nav onto its own row below the logo and cart, so the
+     desktop right-alignment (margin-left:auto) is no longer wanted. */
+  .site-nav {
+    order: 3;
+    width: 100%;
+    margin-left: 0;
+    display: none;                    /* hidden until .is-open is added      */
+    border-top: var(--border-soft);
+    padding-top: var(--space-4);
+  }
+
+  .site-header.is-open .site-nav { display: block; }
+
+  .site-nav ul {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+
+  /* --- HOME PAGE on tablet and mobile ------------------------------------ */
+  /*                                                                          */
+  /*  On a small screen there is no room for the big centre mark, and the      */
+  /*  category links cannot rely on hover — a touch screen has no hover        */
+  /*  state, so anything only revealed on :hover is invisible to a phone       */
+  /*  user. The panels therefore get their frosted backing and their bottom    */
+  /*  bar permanently instead of on demand.                                    */
+
+  /* The centre logo would sit behind the category stack on a narrow screen. */
+  .home .pin--center { display: none; }
+
+  /* Desktop only: a fixed 190px column would take a quarter of a tablet
+     screen and over half a phone screen, and it would sit on top of the
+     category rail. */
+  .side-banner { display: none; }
+
+  /* Frosted glass behind each category so the labels stay readable over the
+     moving footage without a hover to trigger it. */
+  .home .rail__link {
+    background: rgba(12, 12, 12, 0.35);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding-inline: var(--space-4);
+  }
+
+  /* The sweeping bar is shown at full width from the start. The transition
+     is left in place so it still animates if a pointer device is attached. */
+  .home .rail__link::after { transform: scaleX(1); }
+}
+
+/* ---- MOBILE ------------------------------------------------------------- */
+@media (max-width: 640px) {
+
+  /* Headline sizes come down so long words do not overflow. */
+  :root { --fs-hero: 2.5rem; --fs-h2: 2rem; --fs-h3: 1.5rem; }
+
+  .container { padding-inline: var(--space-4); }
+  .section { padding-block: var(--space-6); }
+
+  /* Single column for every grid. */
+  .product-grid,
+  .category-grid { grid-template-columns: 1fr; }
+
+  .form-row--2 { grid-template-columns: 1fr; }
+  .site-footer__grid { grid-template-columns: 1fr; }
+
+  /* Cart row: thumbnail and details on the top row, controls on their own
+     row underneath and spread across the full width. */
+  .cart-item {
+    grid-template-columns: 90px 1fr;
+    gap: var(--space-4);
+  }
+
+  .cart-item__controls {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* --- HEADER on a phone ------------------------------------------------- */
+  /*                                                                          */
+  /*  Three elements only — logo, Menu, Cart — spread evenly across the bar.  */
+  /*                                                                          */
+  /*  The "Lumin Death" wordmark is dropped: at this width it either crowds    */
+  /*  the two buttons or pushes Cart onto a second row. The mark alone still   */
+  /*  identifies the brand, and the .visually-hidden "Lumin Death — home"      */
+  /*  span inside the link keeps it named for screen readers.                  */
+
+  .brand__name { display: none; }
+
+  /*  Back to full size — it was only shrunk to make room for the wordmark
+      that is now hidden. */
+  .brand { min-width: 0; }
+  .brand__mark { width: 46px; }
+
+  /*  space-between with three items produces two equal gaps, so the buttons
+      are evenly spaced from each other and from the edges of the bar.
+      The auto margin that right-aligns the nav on tablet has to be released
+      first, or it would absorb all the free space before it can be shared. */
+  .site-header__inner {
+    justify-content: space-between;
+    gap: var(--space-3);
+    padding-inline: var(--space-4);
+  }
+
+  .nav-toggle { margin-left: 0; }
+}
+
+/* ---- REDUCED MOTION ----------------------------------------------------- */
+/*  Respects the visitor's system setting by removing lifts and zooms.       */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+
+  .product-card:hover,
+  .category-tile:hover,
+  .info-card:hover,
+  .btn:hover { transform: none; }
+
+  .product-card:hover .product-card__media img { transform: none; }
+}
